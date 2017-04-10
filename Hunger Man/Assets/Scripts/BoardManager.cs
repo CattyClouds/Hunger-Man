@@ -20,18 +20,18 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public int columns = 8;                   //Number of columns in our game board.
-    public int rows = 8;                      //Number of rows in our game board.
+    public int columns = 8;
+    public int rows = 8;
     public Count wallCount = new Count(5, 9); //Lower and upper limit for our random number of walls per level.
     public Count foodCount = new Count(1, 5); //Lower and upper limit for our random number of food items per level.
-    public GameObject exit;                   //Prefab to spawn for exit.
-    public GameObject[] floorTiles;           //Array of floor prefabs.
-    public GameObject[] wallTiles;            //Array of wall prefabs.
-    public GameObject[] foodTiles;            //Array of food prefabs.
-    public GameObject[] enemyTiles;           //Array of enemy prefabs.
-    public GameObject[] outerWallTiles;       //Array of outer tile prefabs.
+    public GameObject exit;
+    public GameObject[] floorTiles;
+    public GameObject[] wallTiles;
+    public GameObject[] foodTiles;
+    public GameObject[] enemyTiles;
+    public GameObject[] outerWallTiles;
 
-    private Transform boardHolder;                             //A variable to store a reference to the transform of our Board object.
+    private Transform boardHolder; //A variable to store a reference to the transform of our Board object.
     private List<Vector3> gridPositions = new List<Vector3>(); //A list of possible locations to place tiles.
 
 
