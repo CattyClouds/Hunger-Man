@@ -22,8 +22,8 @@ public class BoardManager : MonoBehaviour
 
     public int columns = 8;
     public int rows = 8;
-    public Count wallCount = new Count(5, 9); //Lower and upper limit for our random number of walls per level.
-    public Count foodCount = new Count(1, 5); //Lower and upper limit for our random number of food items per level.
+    public Count wallCount = new Count(5, 9); //Min/max walls per level.
+    public Count foodCount = new Count(1, 5); //Min/max random number of food items per level.
     public GameObject exit;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
@@ -31,20 +31,19 @@ public class BoardManager : MonoBehaviour
     public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
 
-    private Transform boardHolder; //A variable to store a reference to the transform of our Board object.
+    private Transform boardHolder; //A variable to keep the heirarchy clean.
     private List<Vector3> gridPositions = new List<Vector3>(); //A list of possible locations to place tiles.
 
 
-    //Clears our list gridPositions and prepares it to generate a new board.
+    //Clears our board and generate a new board.
     void InitializeList()
     {
         //Clear our list gridPositions.
         gridPositions.Clear();
 
-        //Loop through x axis (columns).
+        //Adds possible open positions(tiles) to place something on.
         for (int x = 1; x < columns - 1; x++)
         {
-            //Within each column, loop through y axis (rows).
             for (int y = 1; y < rows - 1; y++)
             {
                 //At each index add a new Vector3 to our list with
@@ -64,7 +63,6 @@ public class BoardManager : MonoBehaviour
         //Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
         for (int x = -1; x < columns + 1; x++)
         {
-            //Loop along y axis, starting from -1 to place floor or outerwall tiles.
             for (int y = -1; y < rows + 1; y++)
             {
                 //Choose a random tile from our array of floor tile prefabs and prepare to instantiate it.
@@ -72,17 +70,20 @@ public class BoardManager : MonoBehaviour
 
                 //Check if we current position is at board edge, 
                 //if so choose a random outer wall prefab from our array of outer wall tiles.
+                //TODO: Make the tile sprites match the direction they're facing.
                 if (x == -1 || x == columns || y == -1 || y == rows)
                 {
                     toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
+
                 }
+                //else if x == -1 have sprite facing -->
+                //else if etc..
 
                 //Instantiate the GameObject instance using the prefab chosen for toInstantiate
                 //at the Vector3 corresponding to current grid position in loop, cast it to GameObject.
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
-                //Set the parent of our newly instantiated object instance to boardHolder,
-                //this is just organizational to avoid cluttering hierarchy.
+                //Add to the heirarchy de-clutter object.
                 instance.transform.SetParent(boardHolder);
             }
         }
@@ -98,12 +99,12 @@ public class BoardManager : MonoBehaviour
         //set it's value to the entry at randomIndex from our List gridPositions.
         Vector3 randomPosition = gridPositions[randomIndex];
 
-        //Remove the entry at randomIndex from the list so that it can't be re-used.
+        //Remove the entry at randomIndex from the list so that 
+        //there won't be 2 items in one position
         gridPositions.RemoveAt(randomIndex);
 
         return randomPosition;
     }
-
 
     //LayoutObjectAtRandom accepts an array of game objects to choose
     //from along with a minimum and maximum range for the number of objects to create.
