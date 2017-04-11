@@ -34,7 +34,6 @@ public class BoardManager : MonoBehaviour
     private Transform boardHolder; //A variable to keep the heirarchy clean.
     private List<Vector3> gridPositions = new List<Vector3>(); //A list of possible locations to place tiles.
 
-
     //Clears our board and generate a new board.
     void InitializeList()
     {
@@ -46,13 +45,10 @@ public class BoardManager : MonoBehaviour
         {
             for (int y = 1; y < rows - 1; y++)
             {
-                //At each index add a new Vector3 to our list with
-                //the x and y coordinates of that position.
                 gridPositions.Add(new Vector3(x, y, 0f));
             }
         }
     }
-
 
     //Sets up the outer walls and floor (background) of the game board.
     void BoardSetup()
@@ -83,12 +79,10 @@ public class BoardManager : MonoBehaviour
                 //at the Vector3 corresponding to current grid position in loop, cast it to GameObject.
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
-                //Add to the heirarchy de-clutter object.
-                instance.transform.SetParent(boardHolder);
+                instance.transform.SetParent(boardHolder); //Add to the heirarchy the de-clutter object.
             }
         }
     }
-
 
     //RandomPosition returns a random position from our list gridPositions.
     Vector3 RandomPosition()
@@ -112,18 +106,10 @@ public class BoardManager : MonoBehaviour
     {
         int objectCount = Random.Range(minimum, maximum + 1);
 
-        //Instantiate objects until the randomlychosen limit objectCount is reached
         for (int i = 0; i < objectCount; i++)
         {
-            //Choose a position for randomPosition by getting a random position
-            //from our list of available Vector3s stored in gridPosition
             Vector3 randomPosition = RandomPosition();
-
-            //Choose a random tile from tileArray and assign it to tileChoice
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
-
-            //Instantiate tileChoice at the position returned by
-            //RandomPosition with no change in rotation
             Instantiate(tileChoice, randomPosition, Quaternion.identity);
         }
     }
@@ -136,8 +122,8 @@ public class BoardManager : MonoBehaviour
         //based on a logarithmic progression
         int enemyCount = (int)Mathf.Log(level, 2f);
 
-        BoardSetup(); //Creates the outer walls and floor.
-        InitializeList(); //Reset our list of gridpositions.
+        BoardSetup();
+        InitializeList();
 
         //Instantiate a random number of wall/food/enemy tiles based
         //on minimum and maximum, at randomized positions.

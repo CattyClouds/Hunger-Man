@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance = null; //Static instance of GameManager which allows it to be accessed by any other script.
-    private BoardManager boardScript;          //Store a reference to our BoardManager which will set up the level.
-    private int level = 3;                     //Current level number
+    public static GameManager instance = null;
+    private BoardManager boardScript;
+    private int level = 3;
 
-    //Awake is always called before any Start functions
+    //Enforce singleton pattern for GameManager
     void Awake()
     {
         //Check if instance already exists
@@ -19,8 +19,6 @@ public class GameManager : MonoBehaviour
         //If instance already exists and it's not this:
         else if (instance != this)
         {
-            //Then destroy this. This enforces our singleton pattern, 
-            //meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
         }
 

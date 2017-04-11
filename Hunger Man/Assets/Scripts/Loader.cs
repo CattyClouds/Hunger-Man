@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Loader : MonoBehaviour
 {
-    public GameObject gameManager;  //GameManager prefab to instantiate.
+    public GameObject gameManager;
 
     void Awake()
     {
