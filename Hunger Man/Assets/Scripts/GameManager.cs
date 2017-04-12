@@ -5,7 +5,12 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private BoardManager boardScript;
+    public BoardManager boardScript;
+    public int playerFoodPoints = 100;
+
+    [HideInInspector]
+    public bool playersTurn = true;
+
     private int level = 3;
 
     //Enforce singleton pattern for GameManager
@@ -34,5 +39,10 @@ public class GameManager : MonoBehaviour
         //Call the SetupScene function of the BoardManager script, 
         //pass it current level number.
         boardScript.SetupScene(level);
+    }
+
+    public void GameOver()
+    {
+        enabled = false;
     }
 }
