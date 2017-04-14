@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 5194b77beb2c5e346b3849a500b5577b
+timeCreated: 1492177147
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: scootch over (sans)
+  fontNames:
+  - scootch over (sans)
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
