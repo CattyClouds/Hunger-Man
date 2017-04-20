@@ -24,6 +24,7 @@ public class BoardManager : MonoBehaviour
     public int rows = 8;
     public Count wallCount = new Count(5, 9); //Min/max walls per level.
     public Count foodCount = new Count(1, 5); //Min/max random number of food items per level.
+    public Count enemyCount = new Count(2, 4); //Min/max random number of enemies per level.
     public GameObject exit;
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
@@ -56,7 +57,7 @@ public class BoardManager : MonoBehaviour
         //Instantiate Board and set boardHolder to its transform.
         boardHolder = new GameObject("Board").transform;
 
-        //Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
+        //Loop along x axis, starting from -1 (to fill corner) with floorTile or outerwall edge tiles.
         for (int x = -1; x < columns + 1; x++)
         {
             for (int y = -1; y < rows + 1; y++)
@@ -66,20 +67,16 @@ public class BoardManager : MonoBehaviour
 
                 //Check if we current position is at board edge, 
                 //if so choose a random outer wall prefab from our array of outer wall tiles.
-                //TODO: Make the tile sprites match the direction they're facing.
                 if (x == -1 || x == columns || y == -1 || y == rows)
                 {
                     toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
-
                 }
-                //else if x == -1 have sprite facing -->
-                //else if etc..
 
                 //Instantiate the GameObject instance using the prefab chosen for toInstantiate
                 //at the Vector3 corresponding to current grid position in loop, cast it to GameObject.
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
-                instance.transform.SetParent(boardHolder); //Add to the heirarchy the de-clutter object.
+                instance.transform.SetParent(boardHolder); //Add to the heirarchy de-clutter object.
             }
         }
     }
@@ -120,7 +117,7 @@ public class BoardManager : MonoBehaviour
     {
         //Determine number of enemies based on current level number,
         //based on a logarithmic progression
-        int enemyCount = (int)Mathf.Log(level, 2f);
+        //int enemyCount = (int)Mathf.Log(level, 2f);
 
         BoardSetup();
         InitializeList();
@@ -129,7 +126,8 @@ public class BoardManager : MonoBehaviour
         //on minimum and maximum, at randomized positions.
         LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
         LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
-        LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
+        LayoutObjectAtRandom(enemyTiles, enemyCount.minimum, enemyCount.maximum);
+        //LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
 
         //Instantiate the exit tile in the upper right hand corner of our game board
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
